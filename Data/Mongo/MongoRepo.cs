@@ -113,5 +113,9 @@ namespace Data.Mongo
 			_coll.DeleteMany(filter);
 
 		}
+		public IEnumerable<T> Get(ObjectId[] ids)
+		{
+			return Coll.Find(Builders<T>.Filter.In(o => o.Id, ids)).ToList();
+		}
 	}
 }

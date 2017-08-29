@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using MongoDB.Bson;
+//using MongoDB.Bson;
 using Data;
+using System.Collections.Generic;
 
 namespace UnitTestProject2
 {
@@ -93,12 +94,24 @@ namespace UnitTestProject2
 			}
 			Console.WriteLine("iterations: " + iters);
 		}
-		//[TestMethod] public void Foo()
-		//{
-		//	var w = new Widget() { Name = "Ringo" };
-		//	w = repo.Insert(w);
-		//	Assert.IsFalse(w.Id.Equals(DomainNet.ObjectId.Empty));
-		//}
+		[TestMethod]
+		public void GetMultiple()
+		{
+			var all = repo.GetAll().ToList();
+			if (!all.Any()) Assert.Inconclusive("no recs to test against.");
+			var some = new[] { all[1].Id, all[3].Id, all[5].Id };
+			var someWidgets = repo.Get(some);
+			var someWidgetIds = new List<ObjectId>();
+			foreach (var w in someWidgets)
+			{
+				someWidgetIds.Add(w.Id);
+			}
+			foreach (var s in some)
+			{
+				Assert.IsTrue(someWidgetIds.Contains(s));
+			}
+		}
+
 	}
 }
 

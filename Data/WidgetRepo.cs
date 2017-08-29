@@ -35,5 +35,6 @@ namespace Data
 		{
 			return ((char)rand.Next(97, 123)) + ((char)rand.Next(97, 123)) + ((char)rand.Next(97, 123)).ToString();
 		}
+
 	}
 }
